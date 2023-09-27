@@ -16,7 +16,7 @@ function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   winSize = min(windowWidth,windowHeight);
   createCanvas(winSize,winSize);
-  setupOsc(12000, 3334);
+  //setupOsc(12000, 3334);
   
   // tiles
   columns = 10;
@@ -32,7 +32,7 @@ function setup() {
   }
   
   // colors
-  colorMode(HSB,360,120,100,255);
+  colorMode(HSB,360,100,100,255);
   noFill();
   palette_update(colors[1],colors[2],colors[3]);
 }
@@ -56,6 +56,8 @@ function draw() {
   {
     palette_update();
   }
+
+  breathing_stroke(0.08, 4);
 }
 
 function random_rotation_update() {
@@ -77,17 +79,26 @@ function control_rotation_update() {
 
 function getColors() {
   for (col1 = 0;col1<5;col1++){
-  h = int(table.get(palette, col1 * 3)) + random(-8, 8);
-  s = int(table.get(palette, col1 * 3 + 1)) + random(-8, 10);
-  b = int(table.get(palette, col1 * 3 + 2)) + random(-20, -5);
+  h = int(table.get(palette, col1 * 3)) //+ random(-8, 8);
+  s = int(table.get(palette, col1 * 3 + 1)) //+ random(-8, 10);
+  b = int(table.get(palette, col1 * 3 + 2)) //+ random(-20, -5);
     colors[col1] = color(h,s,b);
   }
 }
 
 function palette_update() {
-  palette = floor(random(38));
+  palette = floor(random(3));
   getColors();
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].palette_update(colors[1],colors[2],colors[3]);
   }
+}
+
+let sine_angle = 0;
+function breathing_stroke(increment_value, amplitude) {
+  let weight_modfier = map(sin(sine_angle), -1, 1, -amplitude, amplitude);
+  for (let i = 0; i < tiles.length; i++) {
+    tiles[i].stroke_weight_update(weight_modfier);
+  }
+  sine_angle += increment_value;
 }

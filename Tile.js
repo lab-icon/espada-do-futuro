@@ -7,6 +7,7 @@ class Tile {
         this.color1 = color(0, 0, 0);
         this.color2 = color(0, 0, 0);
         this.color3 = color(0, 0, 0);
+        this.weight_modfier = 1;
 
         this.rotation = floor(random(2)) * HALF_PI;
     }
@@ -15,13 +16,13 @@ class Tile {
         push();
         strokeCap(ROUND)
         translate(this.position_x, this.position_y);
-        strokeWeight(max(1, this.size / 1.8));
+        strokeWeight(max(1, this.size / 1.8) + this.weight_modfier);
         stroke(this.color1);
         this.makePoints();
-        strokeWeight(max(1, this.size / 3.2));
+        strokeWeight(max(1, this.size / 3.2) + this.weight_modfier);
         stroke(this.color2);
         this.makePoints();
-        strokeWeight(max(1, this.size / 10));
+        strokeWeight(max(1, this.size / 10) + this.weight_modfier);
         stroke(this.color3);
         this.makePoints();
         pop();
@@ -31,14 +32,14 @@ class Tile {
         push();
         strokeCap(SQUARE)
         translate(this.position_x, this.position_y);
-        rotate(this.rotation);
-        strokeWeight(max(1, this.size / 1.8));
+        rotate(this.next_rotation);
+        strokeWeight(max(1, this.size / 1.8) + this.weight_modfier);
         stroke(this.color1);
         this.makeCurve();
-        strokeWeight(max(1, this.size / 3.2));
+        strokeWeight(max(1, this.size / 3.2) + this.weight_modfier);
         stroke(this.color2);
         this.makeCurve();
-        strokeWeight(max(1, this.size / 10));
+        strokeWeight(max(1, this.size / 10) + this.weight_modfier);
         stroke(this.color3);
         this.makeCurve();
         pop();
@@ -56,6 +57,10 @@ class Tile {
         this.color1 = color1;
         this.color2 = color2;
         this.color3 = color3;
+    }
+
+    stroke_weight_update(weight_modfier) {
+        this.weight_modfier = weight_modfier;
     }
 
     makeCurve() {
