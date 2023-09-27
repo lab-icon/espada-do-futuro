@@ -14,7 +14,8 @@ function preload() {
 
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
-  winSize = min(windowWidth,windowHeight);
+  // winSize = min(windowWidth,windowHeight);
+  winSize = 640;
   createCanvas(winSize,winSize);
   //setupOsc(12000, 3334);
   
@@ -34,7 +35,8 @@ function setup() {
   // colors
   colorMode(HSB,360,100,100,255);
   noFill();
-  palette_update(colors[1],colors[2],colors[3]);
+  change_palette();
+  update_tiles_palette(colors[1],colors[2],colors[3]);
 }
 
 function draw() {
@@ -52,11 +54,24 @@ function draw() {
     // random_rotation_update();
     control_rotation_update();
   }
+
   if(frameCount % 60 == 0)
   {
-    palette_update();
+    if(random(1) > 0.60) {
+      change_palette();
+    } else {
+      cicling_colors();
+    }
+    update_tiles_palette();
   }
 
+  // if(frameCount % 30 == 0)
+  // {
+  //   cicling_colors();
+  //   update_tiles_palette();
+  // }
+
+  // function(frequecy, amplitude)
   breathing_stroke(0.08, 4);
 }
 
@@ -86,12 +101,24 @@ function getColors() {
   }
 }
 
-function palette_update() {
+function change_palette() {
   palette = floor(random(3));
   getColors();
+}
+
+function update_tiles_palette() {
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].palette_update(colors[1],colors[2],colors[3]);
   }
+}
+
+// cicles the colors from inside out
+function cicling_colors() {
+  let temp_color = colors[0];
+  for (let i = 0; i < colors.length - 1; i++) {
+    colors[i] = colors[i + 1];
+  }
+  colors[colors.length - 1] = temp_color;
 }
 
 let sine_angle = 0;
@@ -101,4 +128,10 @@ function breathing_stroke(increment_value, amplitude) {
     tiles[i].stroke_weight_update(weight_modfier);
   }
   sine_angle += increment_value;
+}
+
+function sliding_lines() {
+  for (let i = 0; i < tiles.length; i++) {
+    tiles[i].stroke_weight_update(weight_modfier);
+  }
 }
