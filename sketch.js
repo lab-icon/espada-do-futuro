@@ -7,7 +7,7 @@ function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   winSize = min(windowWidth,windowHeight);
   createCanvas(winSize,winSize);
-  setupOsc(12000, 3334);
+  // setupOsc(12000, 3334);
 
   // colorMode(HSB,360,120,100,255);
   noFill();
@@ -26,11 +26,13 @@ function setup() {
 
 function draw() {
   background(255);
+  // fill(255,10);
+  // rect(0,0,width,height);
   // ToDo: remover quando houver osc
   inputValue = Math.random();
 
   for (let i = 0; i < tiles.length; i++) {
-    tiles[i].display_point();
+    // tiles[i].display_point();
   }
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_curve();
@@ -52,7 +54,10 @@ function random_rotation_update() {
 function control_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
     let perlin_noise = noise(a);
-    tiles[i].control_rotation(map(perlin_noise, 0, 1, 0, 2));
-    a += 0.1
-  }
+    if (random()>0.98){
+      tiles[i].control_rotation(map(perlin_noise, 0, 1, 0, 2));
+    }
+    a += 0.1;
+      
+    }
 }

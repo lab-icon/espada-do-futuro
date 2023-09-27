@@ -4,8 +4,10 @@ class Tile {
         this.position_y = position_y * size;
         this.size = size;
         this.index = index;
+        this.offset = random();
 
         this.rotation = floor(random(2)) * HALF_PI;
+        this.next_rotation = this.rotation;
     }
 
     display_point() {
@@ -39,6 +41,7 @@ class Tile {
         stroke(175);
         this.makeCurve();
         pop();
+        this.rotation += (this.next_rotation-this.rotation)*0.2;
     }
 
     makeCurve() {
@@ -54,12 +57,13 @@ class Tile {
     }
 
     random_rotation () {
-        this.rotation = floor(random(2)) * HALF_PI;
+        this.rotation = floor(noise(this.offset)*2) * HALF_PI;
+        // this.offset += 0.001;
     }
 
     control_rotation (value) {
-        this.rotation = floor(value) * HALF_PI;
-        console.log(this.rotation);
+        this.next_rotation = (floor(value) * HALF_PI);
+        // console.log(this.rotation);
     }
 
     log () {
