@@ -4,7 +4,9 @@ class Tile {
         this.position_y = position_y * size;
         this.size = size;
         this.index = index;
-        this.offset = random();
+        this.color1 = color(0, 0, 0);
+        this.color2 = color(0, 0, 0);
+        this.color3 = color(0, 0, 0);
 
         this.rotation = floor(random(2)) * HALF_PI;
         this.next_rotation = this.rotation;
@@ -15,13 +17,13 @@ class Tile {
         strokeCap(ROUND)
         translate(this.position_x, this.position_y);
         strokeWeight(max(1, this.size / 1.8));
-        stroke(0);
+        stroke(this.color1);
         this.makePoints();
         strokeWeight(max(1, this.size / 3.2));
-        stroke(100);
+        stroke(this.color2);
         this.makePoints();
         strokeWeight(max(1, this.size / 10));
-        stroke(175);
+        stroke(this.color3);
         this.makePoints();
         pop();
     }
@@ -32,16 +34,23 @@ class Tile {
         translate(this.position_x, this.position_y);
         rotate(this.rotation);
         strokeWeight(max(1, this.size / 1.8));
-        stroke(0);
+        stroke(this.color1);
         this.makeCurve();
         strokeWeight(max(1, this.size / 3.2));
-        stroke(100);
+        stroke(this.color2);
         this.makeCurve();
         strokeWeight(max(1, this.size / 10));
-        stroke(175);
+        stroke(this.color3);
         this.makeCurve();
         pop();
         this.rotation += (this.next_rotation-this.rotation)*0.2;
+    }
+
+    // choose a new color palette
+    palette_update(color1, color2, color3) {
+        this.color1 = color1;
+        this.color2 = color2;
+        this.color3 = color3;
     }
 
     makeCurve() {
@@ -57,12 +66,11 @@ class Tile {
     }
 
     random_rotation () {
-        this.rotation = floor(noise(this.offset)*2) * HALF_PI;
-        // this.offset += 0.001;
+        this.next_rotation = floor(random(2)) * HALF_PI;
     }
 
     control_rotation (value) {
-        this.next_rotation = (floor(value) * HALF_PI);
+        this.next_rotation = floor(value) * HALF_PI;
         // console.log(this.rotation);
     }
 
