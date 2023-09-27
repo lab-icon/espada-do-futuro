@@ -3,9 +3,35 @@ let inputValue;
 function receiveOsc(address, value) {
 	console.log("received OSC: " + address + ", " + value);
 
-	if (address == '/test') {
-		inputValue = value[0];
-        
+	if (address == '/sensor/1') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/2') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/3') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/4') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/5') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/6') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/7') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/8') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/9') {
+		inputValue = value[0];  
+	}
+	if (address == '/sensor/10') {
+		inputValue = value[0];  
 	}
 }
 
