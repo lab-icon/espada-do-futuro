@@ -5,13 +5,13 @@ class Tile {
         this.size = size;
         this.index = index;
 
-        this.rotation = floor(random(2) * PI / 2);
+        this.rotation = floor(random(2)) * HALF_PI;
     }
 
     display_point() {
         push();
+        strokeCap(ROUND)
         translate(this.position_x, this.position_y);
-        rotate(this.rotation);
         strokeWeight(max(1, this.size / 1.8));
         stroke(0);
         this.makePoints();
@@ -23,6 +23,24 @@ class Tile {
         this.makePoints();
         pop();
     }
+
+    display_curve() {
+        push();
+        strokeCap(SQUARE)
+        translate(this.position_x, this.position_y);
+        rotate(this.rotation);
+        strokeWeight(max(1, this.size / 1.8));
+        stroke(0);
+        this.makeCurve();
+        strokeWeight(max(1, this.size / 3.2));
+        stroke(100);
+        this.makeCurve();
+        strokeWeight(max(1, this.size / 10));
+        stroke(175);
+        this.makeCurve();
+        pop();
+    }
+
 
     makeCurve() {
         arc(this.size / 2, -this.size / 2, this.size, this.size, PI * 0.5, PI);

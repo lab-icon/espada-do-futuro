@@ -11,11 +11,10 @@ function setup() {
   noFill();
   columns = 5;
   rows = columns;
-  tile_size = width / columns;
-  array_length = columns * rows;
+  tile_size = winSize / columns;
   let index = 0;
-  for (let i = 0; i < array_length; i++) {
-    for(let j = 0; j < array_length; j++){
+  for (let i = 0; i < columns + 1; i++) {
+    for(let j = 0; j < rows + 1; j++){
       const tile = new Tile(j, i, tile_size, i);
       tiles.push(tile);
       index++;
@@ -30,6 +29,9 @@ function draw() {
 
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_point();
+  }
+  for (let i = 0; i < tiles.length; i++) {
+    tiles[i].display_curve();
   }
   // noLoop();
 }
