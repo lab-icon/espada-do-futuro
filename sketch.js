@@ -3,13 +3,14 @@ let columns, rows;
 let tile_size;
 
 function setup() {
+  // ToDo: mudar para 4:3 (1440, 1080);
   winSize = min(windowWidth,windowHeight);
   createCanvas(winSize,winSize);
   setupOsc(12000, 3334);
 
   // colorMode(HSB,360,120,100,255);
   noFill();
-  columns = 5;
+  columns = 10;
   rows = columns;
   tile_size = winSize / columns;
   let index = 0;
@@ -33,5 +34,15 @@ function draw() {
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_curve();
   }
-  // noLoop();
+  if(frameCount % 30 == 0){
+    random_update();
+  }
+}
+
+function random_update() {
+  for (let i = 0; i < tiles.length; i++) {
+    if(random(1) > 0.4){
+      tiles[i].update();
+    }
+  }
 }

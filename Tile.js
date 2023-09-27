@@ -41,7 +41,6 @@ class Tile {
         pop();
     }
 
-
     makeCurve() {
         arc(this.size / 2, -this.size / 2, this.size, this.size, PI * 0.5, PI);
         arc(-this.size / 2, this.size / 2, this.size, this.size, -PI * 0.5, 0);
@@ -52,6 +51,10 @@ class Tile {
         point(0,this.size/2);
         point(this.size/2,0);
         point(-this.size/2,0); 
+    }
+
+    update () {
+        this.rotation = floor(random(2)) * HALF_PI;
     }
 
     log () {
