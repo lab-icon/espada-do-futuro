@@ -33,13 +33,13 @@ class Tile {
         strokeCap(SQUARE)
         translate(this.position_x, this.position_y);
         rotate(this.next_rotation);
-        strokeWeight(max(1, this.size / 1.8) + this.weight_modfier);
+        strokeWeight(max(1, this.size / 1.8) + (this.weight_modfier * 3.2));
         stroke(this.color1);
         this.makeCurve();
-        strokeWeight(max(1, this.size / 3.2) + this.weight_modfier);
+        strokeWeight(max(1, this.size / 3.2) + (this.weight_modfier * 2));
         stroke(this.color2);
         this.makeCurve();
-        strokeWeight(max(1, this.size / 10) + this.weight_modfier);
+        strokeWeight(max(1, this.size / 10) + (this.weight_modfier * 1));
         stroke(this.color3);
         this.makeCurve();
         pop();
