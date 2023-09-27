@@ -10,6 +10,7 @@ class Tile {
 
         this.rotation = floor(random(2)) * HALF_PI;
         this.next_rotation = this.rotation;
+        this.nextColors = { color1: this.color1, color2: this.color2, color3: this.color3 }
     }
 
     display_point() {
@@ -44,13 +45,17 @@ class Tile {
         this.makeCurve();
         pop();
         this.rotation += (this.next_rotation-this.rotation)*0.2;
+        this.color1 = lerpColor(this.color1, this.nextColors.color1, this.lerpColorIndex);
+        this.color2 = lerpColor(this.color2, this.nextColors.color2, this.lerpColorIndex);
+        this.color3 = lerpColor(this.color3, this.nextColors.color3, this.lerpColorIndex);
+        this.lerpColorIndex += 1/180;
+        this.lerpColorIndex = constrain(this.lerpColorIndex, 0, 1);
     }
 
     // choose a new color palette
     palette_update(color1, color2, color3) {
-        this.color1 = color1;
-        this.color2 = color2;
-        this.color3 = color3;
+        this.lerpColorIndex = 0
+        this.nextColors = { color1, color2, color3 }
     }
 
     makeCurve() {

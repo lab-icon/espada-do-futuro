@@ -16,7 +16,7 @@ function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   winSize = min(windowWidth,windowHeight);
   createCanvas(winSize,winSize);
-  // setupOsc(12000, 3334);
+  setupOsc(8888, 3334);
   
   // tiles
   columns = 10;
@@ -41,6 +41,7 @@ function draw() {
   background(colors[0]);
   // ToDo: remover quando houver osc
   inputValue = Math.random();
+  // console.log({oscValue})
 
   // for (let i = 0; i < tiles.length; i++) {
   //   tiles[i].display_point();
@@ -52,7 +53,7 @@ function draw() {
     // random_rotation_update();
     control_rotation_update();
   }
-  if(frameCount % 60 == 0)
+  if(frameCount % 180 == 0)
   {
     palette_update();
   }
