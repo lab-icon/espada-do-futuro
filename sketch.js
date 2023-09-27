@@ -1,6 +1,7 @@
 let tiles = [];
 let columns, rows;
 let tile_size;
+let a = 0;
 
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
@@ -34,15 +35,24 @@ function draw() {
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_curve();
   }
-  if(frameCount % 30 == 0){
-    random_update();
+  if(frameCount % 10 == 0){
+    // random_rotation_update();
+    control_rotation_update();
   }
 }
 
-function random_update() {
+function random_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
     if(random(1) > 0.4){
-      tiles[i].update();
+      tiles[i].random_rotation();
     }
+  }
+}
+
+function control_rotation_update() {
+  for (let i = 0; i < tiles.length; i++) {
+    let perlin_noise = noise(a);
+    tiles[i].control_rotation(map(perlin_noise, 0, 1, 0, 2));
+    a += 0.1
   }
 }

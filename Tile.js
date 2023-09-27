@@ -53,8 +53,13 @@ class Tile {
         point(-this.size/2,0); 
     }
 
-    update () {
+    random_rotation () {
         this.rotation = floor(random(2)) * HALF_PI;
+    }
+
+    control_rotation (value) {
+        this.rotation = floor(value) * HALF_PI;
+        console.log(this.rotation);
     }
 
     log () {
