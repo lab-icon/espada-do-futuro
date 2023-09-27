@@ -1,16 +1,24 @@
+// tiles
 let tiles = [];
 let columns, rows;
 let tile_size;
-let a = 0;
+let noise_clock = 0;
+
+// colors
+let table;
+let colors = [];
+
+function preload() {
+  table = loadTable("colors.csv", "csv", "header");
+}
 
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   winSize = min(windowWidth,windowHeight);
   createCanvas(winSize,winSize);
   setupOsc(12000, 3334);
-
-  // colorMode(HSB,360,120,100,255);
-  noFill();
+  
+  // tiles
   columns = 10;
   rows = columns;
   tile_size = winSize / columns;
@@ -22,10 +30,15 @@ function setup() {
       index++;
     }
   }
+  
+  // colors
+  colorMode(HSB,360,120,100,255);
+  noFill();
+  palette_update(colors[1],colors[2],colors[3]);
 }
 
 function draw() {
-  background(255);
+  background(colors[0]);
   // ToDo: remover quando houver osc
   inputValue = Math.random();
 
@@ -39,6 +52,10 @@ function draw() {
     // random_rotation_update();
     control_rotation_update();
   }
+  if(frameCount % 60 == 0)
+  {
+    palette_update();
+  }
 }
 
 function random_rotation_update() {
@@ -51,8 +68,25 @@ function random_rotation_update() {
 
 function control_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
-    let perlin_noise = noise(a);
+    let perlin_noise = noise(noise_clock);
     tiles[i].control_rotation(map(perlin_noise, 0, 1, 0, 2));
-    a += 0.1
+    noise_clock += 0.1
+  }
+}
+
+function getColors() {
+  for (col1 = 0;col1<5;col1++){
+  h = int(table.get(palette, col1 * 3)) + random(-8, 8);
+  s = int(table.get(palette, col1 * 3 + 1)) + random(-8, 10);
+  b = int(table.get(palette, col1 * 3 + 2)) + random(-20, -5);
+    colors[col1] = color(h,s,b);
+  }
+}
+
+function palette_update() {
+  palette = floor(random(38));
+  getColors();
+  for (let i = 0; i < tiles.length; i++) {
+    tiles[i].palette_update(colors[1],colors[2],colors[3]);
   }
 }
