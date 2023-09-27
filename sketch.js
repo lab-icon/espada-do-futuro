@@ -42,9 +42,9 @@ function draw() {
   // ToDo: remover quando houver osc
   inputValue = Math.random();
 
-  for (let i = 0; i < tiles.length; i++) {
-    tiles[i].display_point();
-  }
+  // for (let i = 0; i < tiles.length; i++) {
+  //   tiles[i].display_point();
+  // }
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_curve();
   }
@@ -69,7 +69,8 @@ function random_rotation_update() {
 function control_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
     let perlin_noise = noise(noise_clock);
-    tiles[i].control_rotation(map(perlin_noise, 0, 1, 0, 2));
+    if (random()>0.9)
+      tiles[i].control_rotation(map(perlin_noise, 0, 1, 0, 2));
     noise_clock += 0.1
   }
 }

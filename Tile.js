@@ -51,6 +51,13 @@ class Tile {
         this.color3 = color3;
     }
 
+    // choose a new color palette
+    palette_update(color1, color2, color3) {
+        this.color1 = color1;
+        this.color2 = color2;
+        this.color3 = color3;
+    }
+
     makeCurve() {
         arc(this.size / 2, -this.size / 2, this.size, this.size, PI * 0.5, PI);
         arc(-this.size / 2, this.size / 2, this.size, this.size, -PI * 0.5, 0);
@@ -64,11 +71,11 @@ class Tile {
     }
 
     random_rotation () {
-        this.rotation = floor(random(2)) * HALF_PI;
+        this.next_rotation = floor(random(2)) * HALF_PI;
     }
 
     control_rotation (value) {
-        this.rotation = floor(value) * HALF_PI;
+        this.next_rotation = floor(value) * HALF_PI;
         // console.log(this.rotation);
     }
 
