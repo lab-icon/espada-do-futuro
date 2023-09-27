@@ -31,7 +31,7 @@ class Tile {
     display_curve() {
         push();
         strokeCap(SQUARE)
-        translate(this.position_x, this.position_y);
+        translate(this.position_x + this.size / 2, this.position_y + this.size / 2);
         rotate(this.next_rotation);
         strokeWeight(max(1, this.size / 1.8) + (this.weight_modfier * 3.2));
         stroke(this.color1);

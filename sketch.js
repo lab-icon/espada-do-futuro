@@ -20,13 +20,15 @@ function setup() {
   //setupOsc(12000, 3334);
   
   // tiles
-  columns = 10;
+  columns = 2 + 10;
+  console.log(columns);
   rows = columns;
-  tile_size = winSize / columns;
+  tile_size = winSize / (columns - 2);
+  console.log(tile_size);
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
-      const tile = new Tile(j, i, tile_size, i);
+      const tile = new Tile(i, j, tile_size, i + j);
       tiles.push(tile);
       index++;
     }
@@ -50,20 +52,21 @@ function draw() {
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_curve();
   }
+
   if(frameCount % 10 == 0){
-    // random_rotation_update();
-    control_rotation_update();
+    random_rotation_update();
+    // control_rotation_update();
   }
 
-  if(frameCount % 60 == 0)
-  {
-    if(random(1) > 0.60) {
-      change_palette();
-    } else {
-      cicling_colors();
-    }
-    update_tiles_palette();
-  }
+  // if(frameCount % 60 == 0)
+  // {
+  //   if(random(1) > 0.60) {
+  //     change_palette();
+  //   } else {
+  //     cicling_colors();
+  //   }
+  //   update_tiles_palette();
+  // }
 
   // if(frameCount % 30 == 0)
   // {
@@ -73,8 +76,12 @@ function draw() {
 
   // function(frequecy, amplitude)
   breathing_stroke(0.08, 4);
+
+  // sliding_lines(0.3);
+  sliding_collumns(0.3);
 }
 
+// rotatation controls
 function random_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
     if(random(1) > 0.4){
@@ -92,11 +99,12 @@ function control_rotation_update() {
   }
 }
 
+// color controls
 function getColors() {
   for (col1 = 0;col1<5;col1++){
-  h = int(table.get(palette, col1 * 3)) //+ random(-8, 8);
-  s = int(table.get(palette, col1 * 3 + 1)) //+ random(-8, 10);
-  b = int(table.get(palette, col1 * 3 + 2)) //+ random(-20, -5);
+  h = int(table.get(palette, col1 * 3));
+  s = int(table.get(palette, col1 * 3 + 1));
+  b = int(table.get(palette, col1 * 3 + 2));
     colors[col1] = color(h,s,b);
   }
 }
@@ -130,8 +138,39 @@ function breathing_stroke(increment_value, amplitude) {
   sine_angle += increment_value;
 }
 
-function sliding_lines() {
+// translation controls
+let line_offset = 0;
+function sliding_lines(sliding_speed) { // pensar numa forma menos destrutiva de fazer isso
   for (let i = 0; i < tiles.length; i++) {
-    tiles[i].stroke_weight_update(weight_modfier);
+    let current_tile_grid_position_y = tiles[i].position_y / tiles[i].size;
+    if (current_tile_grid_position_y % 2 == 0) {
+      tiles[i].position_x += sliding_speed;
+      if (tiles[i].position_x >= winSize) {
+        tiles[i].position_x = - tile_size;
+      }
+    } else {
+      tiles[i].position_x -= sliding_speed;
+      if (tiles[i].position_x <= -tile_size) {
+        tiles[i].position_x = winSize + tile_size;
+      }
+    }
+  }
+}
+
+let collumns_offset = 0;
+function sliding_collumns(sliding_speed) {
+  for (let i = 0; i < tiles.length; i++) {
+    let current_tile_grid_position_x = tiles[i].position_x / tiles[i].size;
+    if (current_tile_grid_position_x % 2 == 0) {
+      tiles[i].position_y += sliding_speed;
+      if (tiles[i].position_y >= winSize) {
+        tiles[i].position_y = - tile_size;
+      }
+    } else {
+      tiles[i].position_y -= sliding_speed;
+      if (tiles[i].position_y <= -tile_size) {
+        tiles[i].position_y = winSize + tile_size;
+      }
+    }
   }
 }
