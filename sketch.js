@@ -21,11 +21,11 @@ function setup() {
   // tiles
   columns = 10;
   rows = columns;
-  tile_size = winSize / columns;
+  tile_size = winSize / (columns -2);
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
-      const tile = new Tile(j, i, tile_size, i);
+      const tile = new Tile(i, j, tile_size, i + j);
       tiles.push(tile);
       index++;
     }
