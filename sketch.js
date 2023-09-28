@@ -8,20 +8,35 @@ let noise_clock = 0;
 let table;
 let colors = [];
 
+let WIDTH = 1440;
+let HEIGHT = 1080;
+let MIN_TILE_SIZE = 60;
+let MAX_TILE_SIZE = 1000;
+
 function preload() {
   table = loadTable("colors.csv", "csv", "header");
 }
 
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
-  winSize = min(windowWidth,windowHeight);
-  createCanvas(winSize,winSize);
-  setupOsc(8888, 3334);
+  // winSize = min(windowWidth,windowHeight);
+  createCanvas(WIDTH,HEIGHT);
+  // createCanvas(winSize,winSize);
+  //setupOsc(8888, 3334);
   
+  for (let i=MIN_TILE_SIZE; i<=MAX_TILE_SIZE; i++) {
+    if (width%i==0 && height%i==0) {
+      console.log(i);
+      tile_size = i;
+      break;
+    }
+  }
+
   // tiles
-  columns = 10;
-  rows = columns;
-  tile_size = winSize / (columns -2);
+  columns = floor(WIDTH / tile_size);
+  rows = floor(HEIGHT / tile_size);
+  // tile_size = winSize / (columns -2);
+  
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
