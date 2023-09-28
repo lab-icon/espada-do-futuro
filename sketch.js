@@ -17,7 +17,7 @@ function setup() {
   // winSize = min(windowWidth,windowHeight);
   winSize = 640;
   createCanvas(winSize,winSize);
-  //setupOsc(12000, 3334);
+  setupOsc(8888, 3334);
   
   // tiles
   columns = 2 + 10;
@@ -45,6 +45,7 @@ function draw() {
   background(colors[0]);
   // ToDo: remover quando houver osc
   inputValue = Math.random();
+  // console.log({oscValue})
 
   // for (let i = 0; i < tiles.length; i++) {
   //   tiles[i].display_point();
@@ -54,8 +55,12 @@ function draw() {
   }
 
   if(frameCount % 10 == 0){
-    random_rotation_update();
-    // control_rotation_update();
+    // random_rotation_update();
+    control_rotation_update();
+  }
+  if(frameCount % 180 == 0)
+  {
+    palette_update();
   }
 
   // if(frameCount % 60 == 0)
