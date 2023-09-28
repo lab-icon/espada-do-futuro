@@ -22,7 +22,7 @@ function setup() {
   // winSize = min(windowWidth,windowHeight);
   createCanvas(WIDTH,HEIGHT);
   // createCanvas(winSize,winSize);
-  //setupOsc(8888, 3334);
+  setupOsc(8888, 3334);
   
   for (let i=MIN_TILE_SIZE; i<=MAX_TILE_SIZE; i++) {
     if (width%i==0 && height%i==0) {
@@ -106,5 +106,12 @@ function palette_update() {
   getColors();
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].palette_update(colors[1],colors[2],colors[3]);
+  }
+}
+
+function keyPressed () {
+  if(keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs)
   }
 }
