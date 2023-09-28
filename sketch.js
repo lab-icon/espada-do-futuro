@@ -13,6 +13,11 @@ let HEIGHT = 1080;
 let MIN_TILE_SIZE = 60;
 let MAX_TILE_SIZE = 1000;
 
+let pMapper;
+let quadMap;
+let pGraphics;
+
+
 function preload() {
   table = loadTable("colors.csv", "csv", "header");
 }
@@ -20,7 +25,7 @@ function preload() {
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   // winSize = min(windowWidth,windowHeight);
-  createCanvas(WIDTH,HEIGHT);
+  createCanvas(WIDTH,HEIGHT,WEBGL);
   // createCanvas(winSize,winSize);
   //setupOsc(8888, 3334);
   
@@ -37,6 +42,8 @@ function setup() {
   rows = floor(HEIGHT / tile_size);
   // tile_size = winSize / (columns -2);
   
+  setupMapper();
+
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
@@ -47,13 +54,25 @@ function setup() {
   }
   
   // colors
-  colorMode(HSB,360,120,100,255);
-  noFill();
+  pGraphics.colorMode(HSB,360,120,100,255);
+  pGraphics.noFill();
   palette_update(colors[1],colors[2],colors[3]);
+  console.log(width);
+
+  
+}
+
+function setupMapper() {
+  pMapper = createProjectionMapper(this);
+  quadMap = pMapper.createQuadMap(width, height);
+  // pMapper.load("maps/map.json");
+  pGraphics = createGraphics(width, height);
+  pMapper.load("map.json");
 }
 
 function draw() {
-  background(colors[0]);
+  background(0);
+  // pGraphics.background(colors[0]);
   // ToDo: remover quando houver osc
   inputValue = Math.random();
   // console.log({oscValue})
@@ -61,9 +80,9 @@ function draw() {
   // for (let i = 0; i < tiles.length; i++) {
   //   tiles[i].display_point();
   // }
-  for (let i = 0; i < tiles.length; i++) {
-    tiles[i].display_curve();
-  }
+  // for (let i = 0; i < tiles.length; i++) {
+  //   tiles[i].display_curve();
+  // }
   if(frameCount % 10 == 0){
     // random_rotation_update();
     control_rotation_update();
@@ -73,6 +92,22 @@ function draw() {
   //   palette_update();
   // }
 
+  // quadMap.displaySketch(renderTiles);
+
+  renderTiles(pGraphics);
+
+  quadMap.displayTexture(pGraphics);
+  // image(pGraphics, 0, 0, pGraphics.width, pGraphics.height);
+  
+  
+}
+
+function renderTiles(pGraphics) {
+  pGraphics.background(colors[0]);
+
+  for (let i = 0; i < tiles.length; i++) {
+    tiles[i].display_curve(pGraphics);
+  }
 }
 
 function random_rotation_update() {
@@ -107,4 +142,27 @@ function palette_update() {
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].palette_update(colors[1],colors[2],colors[3]);
   }
+}
+
+function keyPressed() {
+  switch (key) {
+      case 'c':
+          pMapper.toggleCalibration();
+          break;
+      case 'f':
+          let fs = fullscreen();
+          fullscreen(!fs);
+          break;
+      case 'l':
+          pMapper.load("map.json");
+          break;
+
+      case 's':
+          pMapper.save("map.json");
+          break;
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
