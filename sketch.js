@@ -23,8 +23,7 @@ function setup() {
   columns = 2 + 10;
   console.log(columns);
   rows = columns;
-  tile_size = winSize / (columns - 2);
-  console.log(tile_size);
+  tile_size = winSize / (columns -2);
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
@@ -58,38 +57,17 @@ function draw() {
     // random_rotation_update();
     control_rotation_update();
   }
-  if(frameCount % 180 == 0)
-  {
-    palette_update();
-  }
-
-  // if(frameCount % 60 == 0)
+  // if(frameCount % 180 == 0)
   // {
-  //   if(random(1) > 0.60) {
-  //     change_palette();
-  //   } else {
-  //     cicling_colors();
-  //   }
-  //   update_tiles_palette();
+  //   palette_update();
   // }
 
-  // if(frameCount % 30 == 0)
-  // {
-  //   cicling_colors();
-  //   update_tiles_palette();
-  // }
-
-  // function(frequecy, amplitude)
-  breathing_stroke(0.08, 4);
-
-  // sliding_lines(0.3);
-  sliding_collumns(0.3);
 }
 
 // rotatation controls
 function random_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
-    if(random(1) > 0.4){
+    if(random(1) > rotateNumberScale){
       tiles[i].random_rotation();
     }
   }

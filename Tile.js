@@ -33,15 +33,15 @@ class Tile {
     display_curve() {
         push();
         strokeCap(SQUARE)
-        translate(this.position_x + this.size / 2, this.position_y + this.size / 2);
-        rotate(this.next_rotation);
-        strokeWeight(max(1, this.size / 1.8) + (this.weight_modfier * 3.2));
+        translate(this.position_x, this.position_y);
+        rotate(this.rotation);
+        strokeWeight(max(1, (this.size / 1.8) * strokeMultiplier));
         stroke(this.color1);
         this.makeCurve();
-        strokeWeight(max(1, this.size / 3.2) + (this.weight_modfier * 2));
+        strokeWeight(max(1, (this.size / 3.2) * strokeMultiplier));
         stroke(this.color2);
         this.makeCurve();
-        strokeWeight(max(1, this.size / 10) + (this.weight_modfier * 1));
+        strokeWeight(max(1, (this.size / 10) * strokeMultiplier));
         stroke(this.color3);
         this.makeCurve();
         pop();
@@ -49,7 +49,7 @@ class Tile {
         this.color1 = lerpColor(this.color1, this.nextColors.color1, this.lerpColorIndex);
         this.color2 = lerpColor(this.color2, this.nextColors.color2, this.lerpColorIndex);
         this.color3 = lerpColor(this.color3, this.nextColors.color3, this.lerpColorIndex);
-        this.lerpColorIndex += 1/180;
+        this.lerpColorIndex += 0.01;
         this.lerpColorIndex = constrain(this.lerpColorIndex, 0, 1);
     }
 
