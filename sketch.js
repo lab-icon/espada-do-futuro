@@ -53,15 +53,16 @@ function draw() {
     // random_rotation_update();
     control_rotation_update();
   }
-  if(frameCount % 180 == 0)
-  {
-    palette_update();
-  }
+  // if(frameCount % 180 == 0)
+  // {
+  //   palette_update();
+  // }
+
 }
 
 function random_rotation_update() {
   for (let i = 0; i < tiles.length; i++) {
-    if(random(1) > 0.4){
+    if(random(1) > rotateNumberScale){
       tiles[i].random_rotation();
     }
   }

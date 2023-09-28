@@ -1,16 +1,16 @@
-let inputValue;
+let inputValue, toogleColor = false, tempToogleColor = false, strokeMultiplier = 1, rotateNumberScale = 0.4;
 
 function receiveOsc(address, value) {
-	// console.log("received OSC: " + address + ", " + value);
 
-	
 
-	// if (address == '/sensor/1') {
-	// 	inputValue = value[0];  
-	// }
-	// if (address == '/sensor/2') {
-	// 	inputValue = value[0];  
-	// }
+	if (address == '/sensor/1') {
+
+		strokeMultiplier = map(value[0], 0, 1, 1, 2); 
+	}
+	if (address == '/sensor/2') {
+
+		rotateNumberScale = map(value[0], 0, 1, 0.4, 0.9);  
+	}
 	// if (address == '/sensor/3') {
 	// 	inputValue = value[0];  
 	// }
@@ -20,9 +20,16 @@ function receiveOsc(address, value) {
 	// if (address == '/sensor/5') {
 	// 	inputValue = value[0];  
 	// }
-	// if (address == '/sensor/6') {
-	// 	inputValue = value[0];  
-	// }
+	// console.log("received OSC: " + address + ", " + value);
+	if (address == '/sensor/6') {
+
+		if(!!value[0]) {
+			palette_update()
+		}
+
+	   	// toogleColor = !!value[0] !== tempToogleColor ? true : false;
+	    // tempToogleColor = !!value[0];
+	}
 	// if (address == '/sensor/7') {
 	// 	inputValue = value[0];  
 	// }
