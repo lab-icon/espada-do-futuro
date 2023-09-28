@@ -33,15 +33,15 @@ class Tile {
     display_curve() {
         push();
         strokeCap(SQUARE)
-        translate(this.position_x, this.position_y);
+        translate(this.position_x  + this.size / 2, this.position_y + this.size / 2);
         rotate(this.rotation);
-        strokeWeight(max(1, (this.size / 1.8) * strokeMultiplier));
+        strokeWeight(max(1, (this.size / 1.8) + (this.weight_modfier * 4)));
         stroke(this.color1);
         this.makeCurve();
-        strokeWeight(max(1, (this.size / 3.2) * strokeMultiplier));
+        strokeWeight(max(1, (this.size / 3.2) + (this.weight_modfier * 2)));
         stroke(this.color2);
         this.makeCurve();
-        strokeWeight(max(1, (this.size / 10) * strokeMultiplier));
+        strokeWeight(max(1, (this.size / 10) + (this.weight_modfier * 0.5)));
         stroke(this.color3);
         this.makeCurve();
         pop();
@@ -60,11 +60,11 @@ class Tile {
     }
 
     // choose a new color palette
-    palette_update(color1, color2, color3) {
-        this.color1 = color1;
-        this.color2 = color2;
-        this.color3 = color3;
-    }
+    // palette_update(color1, color2, color3) {
+    //     this.color1 = color1;
+    //     this.color2 = color2;
+    //     this.color3 = color3;
+    // }
 
     stroke_weight_update(weight_modfier) {
         this.weight_modfier = weight_modfier;
@@ -88,9 +88,9 @@ class Tile {
 
     control_rotation (value) {
         this.next_rotation = floor(value) * HALF_PI;
-        // console.log(this.rotation);
     }
 
+    // ToDo: remove this function
     log () {
         console.log(this.position_x, this.position_y, this.size);
     }

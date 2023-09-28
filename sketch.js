@@ -23,7 +23,7 @@ function setup() {
   columns = 2 + 10;
   console.log(columns);
   rows = columns;
-  tile_size = winSize / (columns -2);
+  tile_size = winSize / (columns -1);
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
@@ -52,15 +52,6 @@ function draw() {
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].display_curve();
   }
-
-  if(frameCount % 10 == 0){
-    // random_rotation_update();
-    control_rotation_update();
-  }
-  // if(frameCount % 180 == 0)
-  // {
-  //   palette_update();
-  // }
 
 }
 
@@ -122,8 +113,10 @@ function breathing_stroke(increment_value, amplitude) {
 }
 
 // translation controls
+// ToDo: pensar numa forma mais encapsulada de fazer isso
+//       aplicar easing no movimento
 let line_offset = 0;
-function sliding_lines(sliding_speed) { // pensar numa forma menos destrutiva de fazer isso
+function sliding_lines(sliding_speed) {
   for (let i = 0; i < tiles.length; i++) {
     let current_tile_grid_position_y = tiles[i].position_y / tiles[i].size;
     if (current_tile_grid_position_y % 2 == 0) {
