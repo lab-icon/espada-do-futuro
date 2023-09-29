@@ -25,12 +25,13 @@ function preload() {
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   // winSize = min(windowWidth,windowHeight);
-  createCanvas(WIDTH,HEIGHT,WEBGL);
+  createCanvas(displayWidth,displayWidth,WEBGL);
   // createCanvas(winSize,winSize);
   //setupOsc(8888, 3334);
+  setupMapper();
   
   for (let i=MIN_TILE_SIZE; i<=MAX_TILE_SIZE; i++) {
-    if (width%i==0 && height%i==0) {
+    if (WIDTH%i==0 && WIDTH%i==0) {
       console.log(i);
       tile_size = i;
       break;
@@ -42,7 +43,7 @@ function setup() {
   rows = floor(HEIGHT / tile_size);
   // tile_size = winSize / (columns -2);
   
-  setupMapper();
+  
 
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
@@ -58,15 +59,13 @@ function setup() {
   pGraphics.noFill();
   palette_update(colors[1],colors[2],colors[3]);
   console.log(width);
-
-  
 }
 
 function setupMapper() {
   pMapper = createProjectionMapper(this);
-  quadMap = pMapper.createQuadMap(width, height);
+  quadMap = pMapper.createQuadMap(WIDTH, HEIGHT);
   // pMapper.load("maps/map.json");
-  pGraphics = createGraphics(width, height);
+  pGraphics = createGraphics(WIDTH, HEIGHT);
   pMapper.load("map.json");
 }
 
