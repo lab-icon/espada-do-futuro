@@ -96,8 +96,8 @@ function getColors() {
   }
 }
 
-function change_palette() {
-  palette = floor(random(38));
+function palette_update() {
+  palette = floor(random(14));
   getColors();
 }
 
