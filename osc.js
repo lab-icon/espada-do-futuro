@@ -5,7 +5,7 @@ function receiveOsc(address, value) {
 
 	if (address == '/sensor/1') {
 
-		strokeMultiplier = map(value[0], 0, 1, 1, 2); 
+		strokeMultiplier = map(value[0], 0, 1, 0.5, 3); 
 	}
 	if (address == '/sensor/2') {
 

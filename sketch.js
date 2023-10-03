@@ -8,6 +8,11 @@ let noise_clock = 0;
 let table;
 let colors = [];
 
+let WIDTH = 1440;
+let HEIGHT = 1080;
+let MIN_TILE_SIZE = 60;
+let MAX_TILE_SIZE = 1000;
+
 function preload() {
   table = loadTable("colors.csv", "csv", "header");
 }
@@ -15,15 +20,23 @@ function preload() {
 function setup() {
   // ToDo: mudar para 4:3 (1440, 1080);
   // winSize = min(windowWidth,windowHeight);
-  winSize = 640;
-  createCanvas(winSize,winSize);
+  createCanvas(WIDTH,HEIGHT);
+  // createCanvas(winSize,winSize);
   setupOsc(8888, 3334);
   
+  for (let i=MIN_TILE_SIZE; i<=MAX_TILE_SIZE; i++) {
+    if (width%i==0 && height%i==0) {
+      console.log(i);
+      tile_size = i;
+      break;
+    }
+  }
+
   // tiles
-  columns = 2 + 10;
-  console.log(columns);
-  rows = columns;
-  tile_size = winSize / (columns -1);
+  columns = floor(WIDTH / tile_size);
+  rows = floor(HEIGHT / tile_size);
+  // tile_size = winSize / (columns -2);
+  
   let index = 0;
   for (let i = 0; i < columns + 1; i++) {
     for(let j = 0; j < rows + 1; j++){
@@ -94,59 +107,9 @@ function update_tiles_palette() {
   }
 }
 
-// cicles the colors from inside out
-function cicling_colors() {
-  let temp_color = colors[0];
-  for (let i = 0; i < colors.length - 1; i++) {
-    colors[i] = colors[i + 1];
-  }
-  colors[colors.length - 1] = temp_color;
-}
-
-let sine_angle = 0;
-function breathing_stroke(increment_value, amplitude) {
-  let weight_modfier = map(sin(sine_angle), -1, 1, -amplitude, amplitude);
-  for (let i = 0; i < tiles.length; i++) {
-    tiles[i].stroke_weight_update(weight_modfier);
-  }
-  sine_angle += increment_value;
-}
-
-// translation controls
-// ToDo: pensar numa forma mais encapsulada de fazer isso
-//       aplicar easing no movimento
-let line_offset = 0;
-function sliding_lines(sliding_speed) {
-  for (let i = 0; i < tiles.length; i++) {
-    let current_tile_grid_position_y = tiles[i].position_y / tiles[i].size;
-    if (current_tile_grid_position_y % 2 == 0) {
-      tiles[i].position_x += sliding_speed;
-      if (tiles[i].position_x >= winSize) {
-        tiles[i].position_x = - tile_size;
-      }
-    } else {
-      tiles[i].position_x -= sliding_speed;
-      if (tiles[i].position_x <= -tile_size) {
-        tiles[i].position_x = winSize + tile_size;
-      }
-    }
-  }
-}
-
-let collumns_offset = 0;
-function sliding_collumns(sliding_speed) {
-  for (let i = 0; i < tiles.length; i++) {
-    let current_tile_grid_position_x = tiles[i].position_x / tiles[i].size;
-    if (current_tile_grid_position_x % 2 == 0) {
-      tiles[i].position_y += sliding_speed;
-      if (tiles[i].position_y >= winSize) {
-        tiles[i].position_y = - tile_size;
-      }
-    } else {
-      tiles[i].position_y -= sliding_speed;
-      if (tiles[i].position_y <= -tile_size) {
-        tiles[i].position_y = winSize + tile_size;
-      }
-    }
+function keyPressed () {
+  if(keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs)
   }
 }
