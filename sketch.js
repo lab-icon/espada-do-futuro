@@ -102,7 +102,7 @@ function getColors() {
 }
 
 function palette_update() {
-  palette = floor(random(38));
+  palette = floor(random(14));
   getColors();
   for (let i = 0; i < tiles.length; i++) {
     tiles[i].palette_update(colors[1],colors[2],colors[3]);
